@@ -16,6 +16,8 @@ import {
 import { Delete as DeleteIcon, Edit as EditIcon, PlaylistAdd as PlaylistAddIcon } from '@mui/icons-material';
 import axios from 'axios';
 
+const API_URL = process.env.REACT_APP_API_URL || `${window.location.origin}/api`;
+
 function App() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
@@ -27,7 +29,7 @@ function App() {
 
   const fetchTodos = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/todos`);
+      const response = await axios.get(`${API_URL}/todos`);
       setTodos(response.data);
     } catch (error) {
       console.error('Error fetching todos:', error);
@@ -40,7 +42,7 @@ function App() {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/todos`, 
+        `${API_URL}/todos`, 
         { title: newTodo.trim() },
         {
           headers: {
@@ -63,7 +65,7 @@ function App() {
 
   const handleToggle = async (id, completed) => {
     try {
-      await axios.patch(`${process.env.REACT_APP_API_URL}/todos/${id}`, {
+      await axios.patch(`${API_URL}/todos/${id}`, {
         completed: !completed,
       });
       fetchTodos();
@@ -74,7 +76,7 @@ function App() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/todos/${id}`);
+      await axios.delete(`${API_URL}/todos/${id}`);
       fetchTodos();
     } catch (error) {
       console.error('Error deleting todo:', error);
@@ -84,7 +86,7 @@ function App() {
   const handleEdit = async (todo) => {
     if (editingTodo && editingTodo._id === todo._id) {
       try {
-        await axios.patch(`${process.env.REACT_APP_API_URL}/todos/${todo._id}`, {
+        await axios.patch(`${API_URL}/todos/${todo._id}`, {
           title: editingTodo.title,
         });
         fetchTodos();
