@@ -11,6 +11,7 @@ FROM node:18-alpine
 WORKDIR /app
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/src ./src
 COPY --from=builder /app/package*.json ./
 RUN npm install --production
 EXPOSE 3000
