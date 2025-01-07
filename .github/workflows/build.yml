@@ -24,6 +24,7 @@ jobs:
         curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
         -d chat_id="${TELEGRAM_CHAT_ID}" \
         -d text="${MESSAGE}"
+
   build:
     runs-on: ubuntu-latest
 
@@ -48,12 +49,16 @@ jobs:
       id: tag_name
       run: echo "TAG_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
+    - name: Strip 'v' from tag name
+      id: stripped_tag_name
+      run: echo "STRIPPED_TAG_NAME=$(echo ${{ env.TAG_NAME }} | sed 's/^v//')" >> $GITHUB_ENV
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.REPO_NAME }}:${{ env.TAG_NAME#v }}
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.REPO_NAME }}:${{ env.STRIPPED_TAG_NAME }}
 
     - name: Docker Metadata
       uses: docker/metadata-action@v3
