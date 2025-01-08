@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.14](https://github.com/huunghiaish/todolist-frontend/compare/v0.1.13...v0.1.14) (2025-01-08)
+
+
+### Bug Fixes
+
+* version remove v ([57d6887](https://github.com/huunghiaish/todolist-frontend/commit/57d6887d28c14632865bec03f23c190fdb0112d4))
+
 ### [0.1.13](https://github.com/huunghiaish/todolist-frontend/compare/v0.1.12...v0.1.13) (2025-01-08)
 
 
